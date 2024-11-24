@@ -1,0 +1,111 @@
+.container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+
+	// To pass a variable from JS to CSS, used the default CSS variables
+	--octave-count: 1; // Fallback value
+
+	$octave: var(--octave-count);
+	$keyboard-width: calc($octave * 500px);
+	$keyboard-height: 280px;
+	$white-key-width: calc($keyboard-width / $octave / 7);
+	$black-key-width: calc($white-key-width / 2);
+
+	// Use Pure CSS for conditions including --octave-count
+	// &[style*='--octave-count: 3'] {
+	// 	$keyboard-width: 20
+	// }
+
+	.keyboard {
+		width: 100%;
+		max-width: $keyboard-width;
+		height: 100%;
+		max-height: $keyboard-height;
+		border-radius: 8px;
+		display: flex;
+		overflow: hidden;
+
+		.octave {
+			position: relative;
+			width: calc($keyboard-width / $octave);
+			height: 100%;
+			cursor: pointer;
+
+			.whiteKeyContainer {
+				display: flex;
+				width: 100%;
+				height: 100%;
+
+				.whiteKey {
+					background: linear-gradient(180deg, #ffffff, #f7f7f7 80%);
+					box-shadow: inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+					width: $white-key-width;
+					border-right: 1px solid #ccc;
+					transition: transform 0.05s ease, box-shadow 0.05s ease;
+					transform-origin: top center;
+
+					&:hover {
+						background: linear-gradient(180deg, #f9f9f9, #eee 80%);
+						box-shadow: inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+					}
+
+					&:active {
+						box-shadow: inset 0 -1px 4px rgba(0, 0, 0, 0.2);
+						transform: rotateX(10deg) scale(0.99);
+					}
+				}
+			}
+
+			.blackKeyContainer {
+				position: absolute;
+				top: 0;
+				width: 100%;
+				height: 65%;
+				pointer-events: none;
+
+				.blackKey {
+					background: linear-gradient(135deg, #1a1a1a, #3a3a3a);
+					box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+					width: $black-key-width;
+					height: 100%;
+					position: absolute;
+					pointer-events: all;
+					transition: transform 0.05s ease, box-shadow 0.05s ease;
+					transform: translateX(50%);
+					transform-origin: top center;
+
+					&:hover {
+						background: linear-gradient(150deg, #232323, #464646);
+						box-shadow: 0 2px 4px rgba(0, 0, 0, 0.23);
+						transform: translateX(50%) scale(1.01);
+					}
+
+					&:active {
+						transform: translateX(50%) scale(0.99) rotateX(10deg);
+					}
+
+					&:nth-of-type(n) {
+						left: $black-key-width;
+					}
+
+					&:nth-of-type(2n) {
+						left: calc($black-key-width + $white-key-width);
+					}
+
+					&:nth-of-type(3n) {
+						left: calc($black-key-width + 3 * $white-key-width);
+					}
+
+					&:nth-of-type(4n) {
+						left: calc($black-key-width + 4 * $white-key-width);
+					}
+
+					&:nth-of-type(5) {
+						left: calc($black-key-width + 5 * $white-key-width);
+					}
+				}
+			}
+		}
+	}
+}
