@@ -1,4 +1,3 @@
-import Devices from './components/Devices';
 import Keyboard from './components/Keyboard';
 import styles from './styles/App.module.scss';
 
